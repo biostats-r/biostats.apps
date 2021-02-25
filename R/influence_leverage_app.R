@@ -4,8 +4,9 @@
 #
 # TODO
 # Move R2 to figure annotation?
-# recode term column
+# colour table
 # Replot diagnostic plots. Maybe combine data and facet.
+# Explanatory text
 # Make into function
 
 
@@ -72,7 +73,8 @@ server <- function(input, output) {
      ggplot(plot_data(), aes(
          x = x,
          y = y,
-         colour = I(colour)
+         colour = I(colour), 
+         size = if_else(colour == "red", 2, 1)
      )) +
          geom_point() +
          geom_smooth(
@@ -89,7 +91,8 @@ server <- function(input, output) {
              colour = "black"
          ) +
          scale_x_continuous(limits = c(0, 20), expand = c(0, 0)) + 
-         scale_y_continuous(limits = c(0, 20), expand = c(0, 0))
+         scale_y_continuous(limits = c(0, 20), expand = c(0, 0)) +
+         theme(legend.position = "none")
      
  })
  
@@ -99,7 +102,10 @@ server <- function(input, output) {
        red = tidy(mods()$mod_all),
        black = tidy(mods()$mod_black),
        .id = "colour"
- ) %>% select(-statistic)
+ ) %>% 
+         select(-statistic, coefficient = term) %>% 
+         mutate(coefficient = recode(coefficient, "(Intercept)" = "Intercept", "x" = "Slope"))
+         
      })
  
  output$performance_table <- renderTable({
