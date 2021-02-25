@@ -1,2 +1,5 @@
 ^LICENSE\.md$
 ^biostats.apps.Rproj$
+^.*\.Rproj$
+^\.Rproj\.user$
+^README\.Rmd$
