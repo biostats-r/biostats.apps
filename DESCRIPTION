@@ -19,4 +19,5 @@ Imports:
     broom,
     shinyWidgets,
     magrittr,
-    rlang
+    rlang,
+    ggfortify

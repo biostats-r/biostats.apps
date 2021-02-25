@@ -43,9 +43,8 @@ power_lm_app()
 ## Available apps
 
 - `power_lm_app()` Find out how much statistical power a linear model has for an experiment has given the effect size, standard deviation of residuals and number of observations.
+- `influence_leverage_app()` Explore how the position of an point changes diagnostic plots.
 
-## Apps in development
 
-To run the apps that are in development you will need to clone the repo (or just copy the file from github). All the apps are in the R/ folder.
 
-- influence_leverage_app.R Explore how the position of an point changes diagnostic plots.
+
