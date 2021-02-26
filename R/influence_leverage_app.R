@@ -54,14 +54,14 @@ influence_leverage_app <- function() {
     server <- function(input, output) {
     
      plot_data <- reactiveVal({
-         t1 <- tibble(x = 1:10, y = x + rnorm(10), colour = "black") 
+         t1 <- tibble(x = 1:10, y = x + rnorm(10, sd = 2), colour = "black") 
          t2 <- summarise(t1, x = mean(x), y = mean(y), colour = "red") 
-         bind_rows(t2, t1)
+         bind_rows(t1, t2)
      })
         
      observeEvent(input$plot_click, {
          old <- plot_data()
-         old[1, 1:2] <- list(input$plot_click$x, input$plot_click$y)
+         old[nrow(old), 1:2] <- list(input$plot_click$x, input$plot_click$y)
          plot_data(old)
      })
      
@@ -96,7 +96,7 @@ influence_leverage_app <- function() {
                  colour = "black"
              ) +
              scale_x_continuous(limits = c(0, 20), expand = c(0, 0)) + 
-             scale_y_continuous(limits = c(0, 20), expand = c(0, 0)) +
+             scale_y_continuous(limits = c(min(plot_data()$y) - 2, 20), expand = c(0, 0)) +
              theme(legend.position = "none")
          
      })
