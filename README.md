@@ -31,6 +31,9 @@ power_lm_app()
 
 ## Available apps
 
+-   `publication_bias_app()` How much could pubication bias, the
+    tendency not to publish non-significant results, bias the
+    literature?
 -   `power_lm_app()` Find out how much statistical power a linear model
     has for an experiment has given the effect size, standard deviation
     of residuals and number of observations.
