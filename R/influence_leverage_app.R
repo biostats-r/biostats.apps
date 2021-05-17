@@ -37,14 +37,20 @@ influence_leverage_app <- function() {
             )
         ),
         fluidRow(
-            tableOutput("effect_table"),
-            tableOutput("performance_table"),
+            column(
+                width = 7,
+                tableOutput("effect_table")
+            ),
+            column(
+              width = 5, 
+              tableOutput("performance_table")
+            )
         ),
         fluidRow(
-            column(width = 6, 
+            column(width = 5, 
                    plotOutput("diagnostic_black")
             ),
-            column(width = 6, 
+            column(width = 7, 
                    plotOutput("diagnostic_red")
             )
         )
@@ -118,12 +124,15 @@ influence_leverage_app <- function() {
              red = glance(mods()$mod_all),
              black = glance(mods()$mod_black),
              .id = "colour"
-         )
+         ) %>% 
+             select(colour, r.squared, p.value)
      })
      
      #diagnostic plots
      output$diagnostic_black <- renderPlot(autoplot(mods()$mod_black, which = as.numeric(input$choice)))
-     output$diagnostic_red <- renderPlot(autoplot(mods()$mod_all, which = as.numeric(input$choice)))
+     output$diagnostic_red <- renderPlot(
+         autoplot(mods()$mod_all, which = as.numeric(input$choice), data = plot_data(), colour = "colour")
+         )
      
      
     }
